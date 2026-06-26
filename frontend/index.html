@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Stock Market Prediction AI Agent</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="workspace">
+        <aside class="control-panel">
+          <div>
+            <p class="eyebrow">Indian Market Intelligence</p>
+            <h1>Stock Prediction AI Agent</h1>
+            <p class="subtle">Upload CSV/Excel market data to generate technical indicators, weighted scores, recommendation, risk ranges, and probability-based price targets.</p>
+          </div>
+
+          <form id="analysisForm" class="upload-form">
+            <label>
+              Asset name or symbol
+              <input id="assetInput" name="asset" type="text" placeholder="Optional: KAMDHENU, RELIANCE, NIFTY 50" />
+            </label>
+
+            <label class="file-drop" for="fileInput">
+              <span id="fileName">Attach CSV / Excel file</span>
+              <small>Needs date, open, high, low, close, and volume columns under common names</small>
+              <input id="fileInput" name="file" type="file" accept=".csv,.xls,.xlsx,.xlsm" />
+            </label>
+
+            <label>
+              News and market context
+              <textarea
+                id="newsText"
+                name="newsText"
+                rows="8"
+                placeholder="Paste recent company news, sector updates, earnings notes, management commentary, broker views, or macro context here."
+              ></textarea>
+            </label>
+
+            <button id="submitButton" type="submit">Analyze Asset</button>
+          </form>
+
+          <div class="static-note">
+            <strong>Local DeepSeek mode</strong>
+            <span>Calculations are done deterministically, then the metrics and news context are sent to local Ollama model deepseek-r1:8b for deeper feedback.</span>
+          </div>
+        </aside>
+
+        <section class="results-panel">
+          <div id="emptyState" class="empty-state">
+            <h2>Upload market data to begin</h2>
+            <p>The dashboard will calculate SMA, EMA, RSI, MACD, Bollinger Bands, ATR, volatility, support/resistance, drawdown, weighted score, and targets.</p>
+          </div>
+
+          <div id="loadingState" class="loading-state hidden">
+            <div class="spinner"></div>
+            <p>Analyzing uploaded file...</p>
+          </div>
+
+          <div id="errorState" class="error-state hidden"></div>
+
+          <div id="results" class="hidden">
+            <header class="asset-header">
+              <div>
+                <p class="eyebrow">Asset Summary</p>
+                <h2 id="assetName">-</h2>
+                <p id="dateRange" class="subtle">-</p>
+              </div>
+              <div class="price-box">
+                <span>Current Price</span>
+                <strong id="currentPrice">-</strong>
+              </div>
+              <div class="recommendation" id="recommendation">-</div>
+            </header>
+
+            <section class="score-grid">
+              <article class="score-card large">
+                <span>Final AI Score</span>
+                <strong id="overallScore">-</strong>
+                <p id="confidence">-</p>
+              </article>
+              <article class="score-card">
+                <span>Technical</span>
+                <strong id="technicalScore">-</strong>
+                <p id="trend">-</p>
+              </article>
+              <article class="score-card">
+                <span>News</span>
+                <strong id="newsScore">-</strong>
+                <p id="newsLabel">-</p>
+              </article>
+              <article class="score-card">
+                <span>Indian Market</span>
+                <strong id="indianScore">-</strong>
+                <p id="indianLabel">-</p>
+              </article>
+              <article class="score-card">
+                <span>Global Market</span>
+                <strong id="globalScore">-</strong>
+                <p id="globalLabel">-</p>
+              </article>
+              <article class="score-card">
+                <span>Economic</span>
+                <strong id="economicScore">-</strong>
+                <p id="economicLabel">-</p>
+              </article>
+            </section>
+
+            <section class="content-grid">
+              <article class="panel">
+                <h3>Technical Analysis</h3>
+                <div class="metric-grid">
+                  <span>Support <strong id="support">-</strong></span>
+                  <span>Resistance <strong id="resistance">-</strong></span>
+                  <span>RSI <strong id="rsi">-</strong></span>
+                  <span>MACD <strong id="macd">-</strong></span>
+                  <span>ATR <strong id="atr">-</strong></span>
+                  <span>Volatility <strong id="volatility">-</strong></span>
+                  <span>Drawdown <strong id="drawdown">-</strong></span>
+                  <span>SMA 200 <strong id="sma200">-</strong></span>
+                </div>
+                <ul id="signals" class="signal-list"></ul>
+              </article>
+
+              <article class="panel">
+                <h3>Price Targets</h3>
+                <div id="targets" class="targets"></div>
+              </article>
+
+              <article class="panel">
+                <h3>DeepSeek Local Analysis</h3>
+                <div class="llm-summary">
+                  <span>Model <strong id="llmModel">-</strong></span>
+                  <span>Status <strong id="llmStatus">-</strong></span>
+                  <span>LLM View <strong id="llmRecommendation">-</strong></span>
+                </div>
+                <p id="llmSummary"></p>
+                <ul id="llmReasoning" class="signal-list"></ul>
+              </article>
+
+              <article class="panel">
+                <h3>Risk Analysis</h3>
+                <div class="risk-range">
+                  <span>Worst Case <strong id="worstCase">-</strong></span>
+                  <span>Best Case <strong id="bestCase">-</strong></span>
+                </div>
+                <ul id="risks" class="risk-list"></ul>
+              </article>
+
+              <article class="panel">
+                <h3>Explanation</h3>
+                <p id="explanation"></p>
+                <p id="disclaimer" class="disclaimer"></p>
+              </article>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>
