@@ -1,4 +1,4 @@
-# Stock Market Prediction AI
+# Stock Market Prediction AI Agent
 
 A local, full-stack dashboard for analyzing uploaded Indian-market OHLCV data (Open, High, Low, Close, Volume). Upload a CSV or Excel export, optionally add your own news context, and receive technical indicators, a probability-weighted recommendation, price scenarios, risk notes, and an optional local-LLM interpretation.
 
